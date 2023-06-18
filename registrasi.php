@@ -39,7 +39,7 @@ if (isset($_POST["register"])) {
             <input type="password" name="password" id="password">
         </li>
         <li>
-            <label for="password2">konfimrasi password: </label>
+            <label for="password2">konfirmasi password: </label>
             <input type="password" name="password2" id="password2">
         </li>
         <li>
