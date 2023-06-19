@@ -7,7 +7,14 @@ if (!isset($_SESSION["login"])) {
 }
 
 require 'function.php';
-$mahasiswa = query("SELECT * FROM mahasiswa");
+
+$jumlahDataPerHalaman = 2;
+$jumlahData = count(query("SELECT * FROM mahasiswa"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+$awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
+
+$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, $jumlahDataPerHalaman");
 
 if(isset($_POST["cari"])){
     $mahasiswa = cari($_POST["keyword"]);
@@ -34,6 +41,24 @@ if(isset($_POST["cari"])){
         <input type="text" name="keyword" size="40" autofocus placeholder="masukkan keyword pencarian ..." autocomplete="off">
         <button type="submit" name="cari">Cari!</button>
     </form>
+
+    <br><br>
+
+    <?php if($halamanAktif > 1) : ?>
+        <a href="?halaman=<?= $halamanAktif - 1; ?>">&laquo;</a>
+    <?php endif; ?>
+
+    <?php for($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+        <?php if($i == $halamanAktif) :?>
+            <a href="?halaman=<?= $i; ?>" style="font-weight: bold; color: red;"><?= $i; ?></a>
+        <?php else :?>
+            <a href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+        <?php endif;?>
+    <?php endfor; ?>
+
+    <?php if($halamanAktif < $jumlahHalaman) : ?>
+        <a href="?halaman=<?= $halamanAktif + 1; ?>">&raquo;</a>
+    <?php endif; ?>
 
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
