@@ -7,7 +7,14 @@ if (!isset($_SESSION["login"])) {
 }
 
 require 'function.php';
-$mahasiswa = query("SELECT * FROM mahasiswa");
+
+$jumlahDataPerHalaman = 2;
+$jumlahData = count(query("SELECT * FROM mahasiswa"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+$awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
+
+$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, $jumlahDataPerHalaman");
 
 if(isset($_POST["cari"])){
     $mahasiswa = cari($_POST["keyword"]);
