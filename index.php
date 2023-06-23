@@ -28,6 +28,16 @@ if(isset($_POST["cari"])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
+    <style>
+        .loading-icon {
+            width: 100px;
+            position: absolute;
+            top: 120px;
+            left: 300px;
+            z-index: -1;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <a href="logout.php">Logout</a>
@@ -40,6 +50,8 @@ if(isset($_POST["cari"])){
     <form action="" method="post">
         <input type="text" name="keyword" size="40" autofocus placeholder="masukkan keyword pencarian ..." autocomplete="off" id="keyword">
         <button type="submit" name="cari" id="tombol-cari">Cari!</button>
+
+        <img src="img/Loading_icon.gif" class="loading-icon">
     </form>
 
     <br>
